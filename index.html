@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VibeMatch — Modern Dating Experience</title>
-    <!-- Tailwind CSS -->
+    <title>VibeMatch</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -18,320 +15,190 @@
 </head>
 <body class="bg-slate-950 text-slate-100 flex justify-center items-center min-h-screen m-0 p-0">
 
-    <!-- MOBILE APP WRAPPER CONTAINER -->
+    <!-- MOBILE APP WRAPPER -->
     <div class="w-full max-w-md h-screen sm:h-[844px] sm:rounded-3xl bg-slate-900 shadow-2xl flex flex-col relative overflow-hidden border border-slate-800">
 
-        <!-- STEP-BY-STEP ONBOARDING FLOW -->
-        <div id="onboarding-container" class="absolute inset-0 bg-slate-900 z-50 flex flex-col p-6 justify-between">
-            <!-- Top Progress Header -->
+        <!-- ONBOARDING FLOW -->
+        <div id="onboarding-screen" class="absolute inset-0 bg-slate-900 z-50 flex flex-col p-6 justify-between">
             <div>
-                <div class="flex items-center justify-between mb-8">
-                    <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center shadow-lg shadow-rose-500/30">
-                        <i class="fa-solid fa-fire text-white text-xs"></i>
+                <div class="flex items-center justify-between mb-8 mt-2">
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-white shadow-lg shadow-rose-500/30">
+                        <i class="fa-solid fa-fire text-xs"></i>
                     </div>
                     <span id="step-indicator" class="text-xs font-bold text-slate-400">Step 1 of 4</span>
                 </div>
 
                 <!-- STEP 1: NAME -->
-                <div id="step-1" class="onboarding-step flex flex-col">
-                    <h1 class="text-3xl font-extrabold text-white mb-2">What's your name?</h1>
-                    <p class="text-xs text-slate-400 mb-6">This is how you'll appear on VibeMatch.</p>
-                    <input type="text" id="input-name" placeholder="First name" class="w-full bg-slate-800 border border-slate-700 rounded-2xl px-5 py-4 text-sm text-white focus:outline-none focus:border-rose-500">
+                <div id="onboard-step-1" class="space-y-4">
+                    <h1 class="text-3xl font-extrabold text-white">What's your name?</h1>
+                    <p class="text-xs text-slate-400">This is how you'll appear on your profile.</p>
+                    <input type="text" id="setup-name" placeholder="First name" class="w-full bg-slate-800 border border-slate-700/80 rounded-2xl px-5 py-4 text-sm text-white focus:outline-none focus:border-rose-500">
                 </div>
 
                 <!-- STEP 2: GENDER -->
-                <div id="step-2" class="onboarding-step hidden flex flex-col">
-                    <h1 class="text-3xl font-extrabold text-white mb-2">I am a...</h1>
-                    <p class="text-xs text-slate-400 mb-6">Select your gender identity.</p>
-                    <div class="space-y-3">
-                        <button onclick="selectGender('Man', this)" class="gender-btn w-full py-4 px-5 rounded-2xl border border-slate-700 bg-slate-800/60 text-left font-semibold text-white hover:border-rose-500 transition">Man</button>
-                        <button onclick="selectGender('Woman', this)" class="gender-btn w-full py-4 px-5 rounded-2xl border border-slate-700 bg-slate-800/60 text-left font-semibold text-white hover:border-rose-500 transition">Woman</button>
-                        <button onclick="selectGender('Non-binary', this)" class="gender-btn w-full py-4 px-5 rounded-2xl border border-slate-700 bg-slate-800/60 text-left font-semibold text-white hover:border-rose-500 transition">Non-binary</button>
+                <div id="onboard-step-2" class="space-y-4 hidden">
+                    <h1 class="text-3xl font-extrabold text-white">I am a...</h1>
+                    <p class="text-xs text-slate-400">Select your gender identity.</p>
+                    <div class="space-y-3 pt-2">
+                        <button onclick="pickGender('Man', this)" class="gender-option w-full py-4 px-5 rounded-2xl border border-slate-700 bg-slate-800/60 text-left font-semibold text-white transition">Man</button>
+                        <button onclick="pickGender('Woman', this)" class="gender-option w-full py-4 px-5 rounded-2xl border border-slate-700 bg-slate-800/60 text-left font-semibold text-white transition">Woman</button>
+                        <button onclick="pickGender('Non-binary', this)" class="gender-option w-full py-4 px-5 rounded-2xl border border-slate-700 bg-slate-800/60 text-left font-semibold text-white transition">Non-binary</button>
                     </div>
                 </div>
 
-                <!-- STEP 3: INTERESTED IN -->
-                <div id="step-3" class="onboarding-step hidden flex flex-col">
-                    <h1 class="text-3xl font-extrabold text-white mb-2">Who are you looking for?</h1>
-                    <p class="text-xs text-slate-400 mb-6">Choose your preference for matching.</p>
-                    <div class="space-y-3">
-                        <button onclick="selectInterest('Women', this)" class="interest-btn w-full py-4 px-5 rounded-2xl border border-slate-700 bg-slate-800/60 text-left font-semibold text-white hover:border-rose-500 transition">Women</button>
-                        <button onclick="selectInterest('Men', this)" class="interest-btn w-full py-4 px-5 rounded-2xl border border-slate-700 bg-slate-800/60 text-left font-semibold text-white hover:border-rose-500 transition">Men</button>
-                        <button onclick="selectInterest('Everyone', this)" class="interest-btn w-full py-4 px-5 rounded-2xl border border-slate-700 bg-slate-800/60 text-left font-semibold text-white hover:border-rose-500 transition">Everyone</button>
+                <!-- STEP 3: INTERESTS -->
+                <div id="onboard-step-3" class="space-y-4 hidden">
+                    <h1 class="text-3xl font-extrabold text-white">Who are you looking for?</h1>
+                    <p class="text-xs text-slate-400">Choose your matching preference.</p>
+                    <div class="space-y-3 pt-2">
+                        <button onclick="pickInterest('Women', this)" class="interest-option w-full py-4 px-5 rounded-2xl border border-slate-700 bg-slate-800/60 text-left font-semibold text-white transition">Women</button>
+                        <button onclick="pickInterest('Men', this)" class="interest-option w-full py-4 px-5 rounded-2xl border border-slate-700 bg-slate-800/60 text-left font-semibold text-white transition">Men</button>
+                        <button onclick="pickInterest('Everyone', this)" class="interest-option w-full py-4 px-5 rounded-2xl border border-slate-700 bg-slate-800/60 text-left font-semibold text-white transition">Everyone</button>
                     </div>
                 </div>
 
-                <!-- STEP 4: LOCATION PERMISSION -->
-                <div id="step-4" class="onboarding-step hidden flex flex-col text-center items-center py-8">
-                    <div class="w-20 h-20 rounded-full bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-500 text-3xl mb-6 shadow-xl shadow-rose-500/10">
+                <!-- STEP 4: LOCATION -->
+                <div id="onboard-step-4" class="space-y-4 hidden text-center py-6">
+                    <div class="w-20 h-20 rounded-full bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-500 text-3xl mx-auto mb-4 shadow-xl">
                         <i class="fa-solid fa-location-dot"></i>
                     </div>
-                    <h1 class="text-2xl font-extrabold text-white mb-2">Enable Location</h1>
-                    <p class="text-xs text-slate-400 max-w-xs mb-8">VibeMatch uses your location to show potential matches nearby in your city.</p>
-                    <button onclick="detectLocation()" class="w-full py-4 bg-slate-800 border border-slate-700 rounded-2xl font-semibold text-white hover:bg-slate-700 transition mb-3">
-                        Allow Location Access 📍
-                    </button>
+                    <h1 class="text-2xl font-extrabold text-white">Location Access</h1>
+                    <p class="text-xs text-slate-400 max-w-xs mx-auto">We use your device location to connect you with people nearby.</p>
+                    <div class="p-3 bg-slate-800/80 border border-slate-700 rounded-xl text-xs text-emerald-400 font-semibold mt-4">
+                        📍 Auto-detected: Lagos, Nigeria
+                    </div>
                 </div>
             </div>
 
-            <!-- Bottom Navigation Action -->
-            <div id="onboarding-footer">
-                <button onclick="nextStep()" id="next-btn" class="w-full py-4 bg-gradient-to-r from-rose-500 to-pink-500 font-bold text-white rounded-2xl shadow-lg shadow-rose-500/30 hover:opacity-95 transition">
-                    Continue
-                </button>
-            </div>
+            <button onclick="nextOnboardStep()" id="onboard-next-btn" class="w-full py-4 bg-gradient-to-r from-rose-500 to-pink-500 font-bold text-white rounded-2xl shadow-lg shadow-rose-500/30 hover:opacity-95 transition">
+                Continue
+            </button>
         </div>
 
-        <!-- TOP APP HEADER -->
-        <header class="px-6 py-4 flex items-center justify-between border-b border-slate-800/60 bg-slate-900/80 backdrop-blur-md z-20">
+        <!-- APP HEADER -->
+        <header class="px-6 py-3 flex items-center justify-between border-b border-slate-800/60 bg-slate-900/90 backdrop-blur-md z-20">
             <div class="flex items-center space-x-2">
-                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center shadow-lg shadow-rose-500/30">
-                    <i class="fa-solid fa-fire text-white text-sm"></i>
-                </div>
-                <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-rose-400 to-pink-500 bg-clip-text text-transparent">VibeMatch</span>
+                <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent">tinder</span>
             </div>
-            <button onclick="switchTab('profile')" class="w-10 h-10 rounded-full bg-slate-800/80 border border-slate-700/50 flex items-center justify-center text-slate-300 hover:text-white transition">
-                <i class="fa-solid fa-sliders text-sm"></i>
-            </button>
+            <div class="flex items-center space-x-3">
+                <button class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 text-xs"><i class="fa-solid fa-shield-halved"></i></button>
+            </div>
         </header>
 
-        <!-- MAIN DYNAMIC CONTENT AREA -->
+        <!-- CONTENT SECTIONS -->
         <main class="flex-1 overflow-y-auto hide-scrollbar relative pb-20">
 
-            <!-- TAB 1: DISCOVER / SWIPE FEED -->
-            <section id="tab-discover" class="p-4 flex flex-col h-full">
-                <div id="swipe-card-container" class="relative flex-1 min-h-[430px] rounded-3xl overflow-hidden shadow-2xl border border-slate-700/60 bg-slate-800 flex flex-col justify-end">
-                    <img id="card-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Profile" class="absolute inset-0 w-full h-full object-cover">
+            <!-- TAB 1: DISCOVER / SWIPE -->
+            <section id="tab-swipe" class="p-4 flex flex-col h-full">
+                <div id="swipe-card" class="relative flex-1 min-h-[440px] rounded-3xl overflow-hidden shadow-2xl border border-slate-700/60 bg-slate-800 flex flex-col justify-end">
+                    <img id="card-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
 
-                    <div class="relative p-6 z-10">
-                        <div class="flex items-end justify-between mb-2">
-                            <div>
-                                <h2 id="card-name" class="text-3xl font-extrabold text-white tracking-tight">Jessica, 23</h2>
-                                <p id="card-location" class="text-sm text-slate-300 flex items-center mt-1">
-                                    <i class="fa-solid fa-location-dot text-rose-500 mr-1.5"></i> 3 km away
-                                </p>
-                            </div>
-                            <span class="bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs px-3 py-1 rounded-full font-semibold">Active</span>
+                    <div class="relative p-6 z-10 space-y-1">
+                        <div class="flex items-center space-x-2">
+                            <h2 id="card-name" class="text-3xl font-extrabold text-white">Jordan, 23</h2>
+                            <i class="fa-solid fa-circle-check text-sky-400 text-lg"></i>
                         </div>
-                        <p id="card-bio" class="text-sm text-slate-300 line-clamp-2 mt-2">Coffee addict, fitness enthusiast, and startup founder. ✨</p>
+                        <p class="text-xs text-slate-300 flex items-center space-x-3">
+                            <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>2mi away</span>
+                            <span>•</span>
+                            <span>Financial Analyst</span>
+                        </p>
+                        <p id="card-bio" class="text-xs text-slate-300 pt-2 line-clamp-2">Living in Lagos. I have the simplest tastes and am always satisfied with the best ✨</p>
                     </div>
                 </div>
 
-                <div class="flex items-center justify-center space-x-6 py-5">
-                    <button onclick="swipeCard('pass')" class="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 shadow-lg flex items-center justify-center text-rose-500 hover:bg-rose-500 hover:text-white transition">
+                <!-- SWIPE ACTIONS -->
+                <div class="flex items-center justify-center space-x-5 py-4">
+                    <button onclick="handleSwipe()" class="w-14 h-14 rounded-full bg-slate-900 border border-slate-800 shadow-lg flex items-center justify-center text-rose-500 hover:scale-105 transition">
                         <i class="fa-solid fa-xmark text-2xl"></i>
                     </button>
-                    <button onclick="swipeCard('like')" class="w-16 h-16 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 shadow-xl shadow-rose-500/40 flex items-center justify-center text-white hover:scale-105 transition">
+                    <button onclick="handleSwipe()" class="w-16 h-16 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 shadow-xl shadow-rose-500/40 flex items-center justify-center text-white hover:scale-105 transition">
                         <i class="fa-solid fa-heart text-2xl"></i>
                     </button>
                 </div>
             </section>
 
-            <!-- TAB 2: MATCHES & PROFESSIONAL MESSAGING -->
-            <section id="tab-messages" class="p-4 hidden flex flex-col h-full">
-                <h3 class="text-lg font-bold mb-3 text-white">New Matches</h3>
-                
-                <!-- Matches Row -->
-                <div class="flex space-x-3 overflow-x-auto hide-scrollbar pb-3 mb-2 border-b border-slate-800">
-                    <div onclick="openChat('Chloe')" class="flex flex-col items-center space-y-1 flex-shrink-0 cursor-pointer">
-                        <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-rose-500 to-pink-500">
-                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover rounded-full border-2 border-slate-900">
+            <!-- TAB 2: CHATS & MESSAGES -->
+            <section id="tab-chats" class="p-4 hidden flex flex-col h-full space-y-4">
+                <!-- Search bar -->
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400 text-xs"></i>
+                    <input type="text" placeholder="Search 25 Matches" class="w-full bg-slate-800/80 border border-slate-700/60 rounded-xl pl-10 pr-4 py-3 text-xs text-white focus:outline-none">
+                </div>
+
+                <!-- New Matches Stories Row -->
+                <div>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-rose-500 mb-3">New Matches</h3>
+                    <div class="flex space-x-4 overflow-x-auto hide-scrollbar pb-2">
+                        <div onclick="openChat('Chloe')" class="flex flex-col items-center space-y-1 flex-shrink-0 cursor-pointer">
+                            <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-rose-500 to-pink-500">
+                                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover rounded-full border-2 border-slate-900">
+                            </div>
+                            <span class="text-xs font-medium text-slate-300">Chloe</span>
                         </div>
-                        <span class="text-xs font-medium text-slate-300">Chloe</span>
-                    </div>
-                    <div onclick="openChat('Marcus')" class="flex flex-col items-center space-y-1 flex-shrink-0 cursor-pointer">
-                        <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-rose-500 to-pink-500">
-                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover rounded-full border-2 border-slate-900">
+                        <div onclick="openChat('Crystal')" class="flex flex-col items-center space-y-1 flex-shrink-0 cursor-pointer">
+                            <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-rose-500 to-pink-500">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover rounded-full border-2 border-slate-900">
+                            </div>
+                            <span class="text-xs font-medium text-slate-300">Crystal</span>
                         </div>
-                        <span class="text-xs font-medium text-slate-300">Marcus</span>
                     </div>
                 </div>
 
-                <h3 class="text-lg font-bold mb-3 text-white mt-2">Conversations</h3>
-                <!-- Professional Chat List -->
-                <div class="space-y-2">
-                    <div onclick="openChat('Chloe')" class="flex items-center space-x-3 p-3 bg-slate-800/40 hover:bg-slate-800/80 border border-slate-800 rounded-2xl transition cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80" class="w-12 h-12 rounded-full object-cover">
-                        <div class="flex-1 min-w-0">
-                            <h4 class="font-bold text-white text-sm">Chloe</h4>
-                            <p class="text-xs text-slate-400 truncate">Hey! Loved your music taste 🎵</p>
+                <!-- Messages List -->
+                <div>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Messages</h3>
+                    <div class="space-y-3">
+                        <div onclick="openChat('Allison')" class="flex items-center space-x-3 cursor-pointer hover:bg-slate-800/40 p-2 rounded-xl transition">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" class="w-14 h-14 rounded-full object-cover">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-bold text-white text-sm">Allison</h4>
+                                <p class="text-xs text-slate-400 truncate">Hey Allison what you up to</p>
+                            </div>
                         </div>
-                        <span class="text-[10px] text-slate-500">10m</span>
+                        <div onclick="openChat('Crystal')" class="flex items-center space-x-3 cursor-pointer hover:bg-slate-800/40 p-2 rounded-xl transition">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" class="w-14 h-14 rounded-full object-cover">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-bold text-white text-sm flex items-center">Crystal <i class="fa-solid fa-circle-check text-sky-400 ml-1 text-[10px]"></i></h4>
+                                <p class="text-xs text-slate-400 truncate">Hey Crystal, I'm Will nice to meet you...</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- TAB 3: PROFILE MANAGEMENT -->
-            <section id="tab-profile" class="p-6 hidden flex flex-col space-y-5">
+            <!-- TAB 3: PROFILE TAB -->
+            <section id="tab-profile" class="p-6 hidden space-y-6">
+                <!-- Profile Ring & Completion -->
                 <div class="flex flex-col items-center">
-                    <div class="relative w-24 h-24 rounded-full p-1 bg-gradient-to-tr from-rose-500 to-pink-500 mb-2">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover rounded-full">
+                    <div class="relative w-28 h-28 rounded-full p-1 bg-gradient-to-tr from-rose-500 to-pink-500 mb-3 shadow-xl">
+                        <img id="profile-pic-preview" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover rounded-full border-4 border-slate-900">
+                        <button class="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-white text-slate-900 flex items-center justify-center shadow-lg font-bold text-xs"><i class="fa-solid fa-pen"></i></button>
                     </div>
-                    <h3 id="profile-display-name" class="text-xl font-bold text-white">Elijah, 24</h3>
-                    <p id="profile-display-location" class="text-xs text-slate-400 mt-0.5"><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> Lagos State</p>
+                    <div class="bg-gradient-to-r from-rose-500 to-pink-500 text-white font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider mb-1">
+                        100% Complete
+                    </div>
+                    <h3 id="profile-display-title" class="text-xl font-bold text-white flex items-center">Kamal, 30 <i class="fa-solid fa-circle-check text-sky-400 ml-1 text-sm"></i></h3>
                 </div>
 
-                <div class="bg-slate-800/50 border border-slate-700/60 rounded-2xl p-4 space-y-4">
+                <!-- Structured Edit Card -->
+                <div class="bg-slate-800/50 border border-slate-700/60 rounded-2xl p-4 space-y-3">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-rose-400">Edit Profile Information</h4>
                     <div>
-                        <label class="text-xs text-slate-300 block mb-1">Display Name</label>
-                        <input type="text" id="edit-name" value="Elijah" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                        <label class="text-[11px] text-slate-400 block mb-1">Your Name</label>
+                        <input type="text" id="edit-profile-name" value="Kamal" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-rose-500">
                     </div>
                     <div>
-                        <label class="text-xs text-slate-300 block mb-1">Bio</label>
-                        <textarea id="edit-bio" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">Builder, designer, and football lover. ✨</textarea>
+                        <label class="text-[11px] text-slate-400 block mb-1">Bio & Lifestyle</label>
+                        <textarea id="edit-profile-bio" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-rose-500">Living in Lagos. I have the simplest tastes and am always satisfied with the best ✨</textarea>
                     </div>
-                    <div>
-                        <label class="text-xs text-slate-300 block mb-1">Gender</label>
-                        <select id="edit-gender" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-                            <option>Man</option>
-                            <option>Woman</option>
-                            <option>Non-binary</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="text-xs text-slate-300 block mb-1">Interested In</label>
-                        <select id="edit-interest" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-                            <option>Women</option>
-                            <option>Men</option>
-                            <option>Everyone</option>
-                        </select>
-                    </div>
-                    <button onclick="saveProfileChanges()" class="w-full py-2.5 bg-rose-500 text-white font-bold rounded-xl text-xs shadow-md">Save Changes</button>
+                    <button onclick="saveProfileUpdates()" class="w-full py-3 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold rounded-xl text-xs shadow-md">Save Changes</button>
                 </div>
             </section>
 
         </main>
 
-        <!-- ACTIVE CHAT MODAL OVERLAY -->
+        <!-- DIRECT CHAT MODAL -->
         <div id="chat-modal" class="absolute inset-0 bg-slate-900 z-40 hidden flex flex-col">
-            <div class="px-6 py-4 flex items-center justify-between border-b border-slate-800 bg-slate-900">
-                <button onclick="closeChat()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-arrow-left text-lg"></i></button>
-                <h3 id="chat-with-name" class="font-bold text-white text-sm">Chat</h3>
-                <div class="w-6"></div>
-            </div>
-            <div class="flex-1 p-4 overflow-y-auto space-y-3">
-                <div class="flex justify-start">
-                    <div class="bg-slate-800 text-slate-200 text-xs px-4 py-3 rounded-2xl max-w-[75%]">Hey! Loved your music taste 🎵</div>
-                </div>
-            </div>
-            <div class="p-3 border-t border-slate-800 bg-slate-900 flex items-center space-x-2">
-                <input type="text" placeholder="Type a message..." class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-rose-500">
-                <button class="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center"><i class="fa-solid fa-paper-plane text-xs"></i></button>
-            </div>
-        </div>
-
-        <!-- BOTTOM NAVIGATION BAR -->
-        <nav class="absolute bottom-0 left-0 right-0 h-16 bg-slate-950/90 backdrop-blur-lg border-t border-slate-800 flex items-center justify-around px-4 z-30">
-            <button onclick="switchTab('discover')" id="nav-discover" class="text-rose-500 flex flex-col items-center transition"><i class="fa-solid fa-fire text-xl"></i></button>
-            <button onclick="switchTab('messages')" id="nav-messages" class="text-slate-500 flex flex-col items-center transition"><i class="fa-solid fa-comments text-xl"></i></button>
-            <button onclick="switchTab('profile')" id="nav-profile" class="text-slate-500 flex flex-col items-center transition"><i class="fa-solid fa-user text-xl"></i></button>
-        </nav>
-
-    </div>
-
-    <!-- CONTROLLER SCRIPT -->
-    <script>
-        let currentStep = 1;
-        let userData = { name: '', gender: '', interest: '', location: 'Lagos State' };
-
-        function selectGender(gender, btn) {
-            document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('border-rose-500', 'bg-rose-500/10'));
-            btn.classList.add('border-rose-500', 'bg-rose-500/10');
-            userData.gender = gender;
-        }
-
-        function selectInterest(interest, btn) {
-            document.querySelectorAll('.interest-btn').forEach(b => b.classList.remove('border-rose-500', 'bg-rose-500/10'));
-            btn.classList.add('border-rose-500', 'bg-rose-500/10');
-            userData.interest = interest;
-        }
-
-        function detectLocation() {
-            userData.location = "Lagos, Nigeria";
-            alert("Location detected successfully: Lagos, Nigeria 📍");
-            nextStep();
-        }
-
-        function nextStep() {
-            if(currentStep === 1) {
-                const nameVal = document.getElementById('input-name').value.trim();
-                if(!nameVal) { alert("Please enter your name"); return; }
-                userData.name = nameVal;
-            }
-            
-            if(currentStep < 4) {
-                document.getElementById(`step-${currentStep}`).classList.add('hidden');
-                currentStep++;
-                document.getElementById(`step-${currentStep}`).classList.remove('hidden');
-                document.getElementById('step-indicator').innerText = `Step ${currentStep} of 4`;
-                if(currentStep === 4) {
-                    document.getElementById('next-btn').innerText = "Finish Setup 🎉";
-                }
-            } else {
-                // Complete onboarding
-                document.getElementById('onboarding-container').style.display = 'none';
-                document.getElementById('profile-display-name').innerText = userData.name + ", 24";
-                document.getElementById('profile-display-location').innerHTML = `<i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> ${userData.location}`;
-                document.getElementById('edit-name').value = userData.name;
-            }
-        }
-
-        function saveProfileChanges() {
-            userData.name = document.getElementById('edit-name').value;
-            userData.location = document.getElementById('edit-gender').value;
-            document.getElementById('profile-display-name').innerText = userData.name + ", 24";
-            alert("Profile updated successfully!");
-        }
-
-        const profiles = [
-            { name: "Jessica, 23", distance: "3 km away", bio: "Coffee addict, fitness enthusiast, and startup founder. ✨", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" },
-            { name: "Amaka, 21", distance: "5 km away", bio: "Fashion designer & foodie. Let's grab food! 🍜", img: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80" }
-        ];
-        let currentProfileIndex = 0;
-
-        function swipeCard(action) {
-            const card = document.getElementById('swipe-card-container');
-            card.style.transform = action === 'pass' ? 'translateX(-120px) rotate(-15deg)' : 'translateX(120px) rotate(15deg)';
-            card.style.opacity = '0';
-            card.style.transition = 'all 0.3s ease';
-
-            setTimeout(() => {
-                currentProfileIndex = (currentProfileIndex + 1) % profiles.length;
-                const p = profiles[currentProfileIndex];
-                document.getElementById('card-name').innerText = p.name;
-                document.getElementById('card-location').innerHTML = `<i class="fa-solid fa-location-dot text-rose-500 mr-1.5"></i> ${p.distance}`;
-                document.getElementById('card-bio').innerText = p.bio;
-                document.getElementById('card-img').src = p.img;
-
-                card.style.transform = 'translateX(0) rotate(0deg)';
-                card.style.opacity = '1';
-                card.style.transition = 'none';
-            }, 300);
-        }
-
-        function switchTab(tabName) {
-            document.getElementById('tab-discover').classList.add('hidden');
-            document.getElementById('tab-messages').classList.add('hidden');
-            document.getElementById('tab-profile').classList.add('hidden');
-
-            document.getElementById('nav-discover').className = "text-slate-500 flex flex-col items-center transition";
-            document.getElementById('nav-messages').className = "text-slate-500 flex flex-col items-center transition";
-            document.getElementById('nav-profile').className = "text-slate-500 flex flex-col items-center transition";
-
-            document.getElementById('tab-' + tabName).classList.remove('hidden');
-            document.getElementById('nav-' + tabName).className = "text-rose-500 flex flex-col items-center transition scale-110";
-        }
-
-        function openChat(name) {
-            document.getElementById('chat-with-name').innerText = name;
-            document.getElementById('chat-modal').classList.remove('hidden');
-        }
-
-        function closeChat() {
-            document.getElementById('chat-modal').classList.add('hidden');
-        }
-    </script>
-</body>
-</html>
+            <div class="
